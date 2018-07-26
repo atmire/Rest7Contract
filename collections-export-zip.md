@@ -17,6 +17,8 @@ The json representation is as follow
       {
         "collection-id": "1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb",
         "date": "2018-07-23T13:20:29",
+        "state": "completed",
+        "size": "6392835",
         "_links": {
           "self": {
             "href": "https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/exportToZip/view/2018-07-23T13:20:29"
@@ -26,6 +28,7 @@ The json representation is as follow
       {
         "collection-id": "1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb",
         "date": "2018-07-26T09:33:08",
+        "state": "in progress",
         "_links": {
           "self": {
             "href": "https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/exportToZip/view/2018-07-26T09:33:08"
@@ -55,6 +58,7 @@ The json representation is as follow
 {
   "collection-id": "1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb",
   "date": "2018-07-26T09:38:13",
+  "state": "in progress",
   "_links": {
     "self": {
       "href": "https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/exportToZip/view/2018-07-26T09:38:13"
