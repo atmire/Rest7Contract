@@ -78,7 +78,7 @@ The json representation is as follow
   "collection-id": "1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb",
   "date": "2018-07-26T09:38:13",
   "state": "completed",
-  "size": "2456231"
+  "size": "2456231",
   "_links": {
     "self": {
       "href": "https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/exportToZip/view/2018-07-26T09:38:13"
