@@ -5,7 +5,7 @@ All the API requests below require admin permissions on the collection
 
 **/api/core/collections/<:uuid>/exportToZip**
 
-Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/exportToZip>
+Example: <https://dspace7-internal.atmire.com/rest/#https://dspace7-internal.atmire.com/rest/api/core/collections/3b43a8bc-9f7c-499b-ac43-8e83519ec40c/exportToZip>
 
 It should provide access to the list of exports for this collection.
 
@@ -52,7 +52,7 @@ The json representation is as follow
 
 **/api/core/collections/<:uuid>/exportToZip/create**
 
-Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/exportToZip/create>
+Example: <https://dspace7-internal.atmire.com/rest/#https://dspace7-internal.atmire.com/rest/api/core/collections/3b43a8bc-9f7c-499b-ac43-8e83519ec40c/exportToZip/create>
 
 It should start creating the ZIP file for the collection
 
@@ -73,7 +73,7 @@ The json representation is as follow
 
 **/api/core/collections/<:uuid>/exportToZip/view/<:date>**
 
-Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/exportToZip/view/2018-07-26T09:38:13>
+Example: <https://dspace7-internal.atmire.com/rest/#https://dspace7-internal.atmire.com/rest/api/core/collections/3b43a8bc-9f7c-499b-ac43-8e83519ec40c/exportToZip/view/2018-09-10T09:37:24.0>
 
 It should return the state of the ZIP file for the collection.
 The state can be completed, in progress, not available.
@@ -100,7 +100,7 @@ The json representation is as follow
 
 **/api/core/collections/<:uuid>/exportToZip/download/<:date>**
 
-Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/exportToZip/download/2018-07-26T09:38:13>
+Example: <https://dspace7-internal.atmire.com/rest/#https://dspace7-internal.atmire.com/rest/api/core/collections/3b43a8bc-9f7c-499b-ac43-8e83519ec40c/exportToZip/download/2018-09-10T09:37:24.0>
 
 It should return the ZIP file for the collection, assuming it's completed.
 
