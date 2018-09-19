@@ -60,9 +60,9 @@ The json representation is as follow
 
 It returns a list of all previously created csv files for the community/collection/item. This is similar to the zip export page
 
-**/api/core/<:type>/<:uuid>/exportToCsv/create**
+**PUSH /api/core/<:type>/<:uuid>/exportToCsv/create**
 
-Example: <https://dspace7-internal.atmire.com/rest/#https://dspace7-internal.atmire.com/rest/api/core/community/8a085042-ba77-11e8-96f8-529269fb1459/exportToCsv/create>
+Example: PUSH <https://dspace7-internal.atmire.com/rest/#https://dspace7-internal.atmire.com/rest/api/core/community/8a085042-ba77-11e8-96f8-529269fb1459/exportToCsv/create>
 
 It should start creating the csv file for the collection
 
