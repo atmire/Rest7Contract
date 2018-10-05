@@ -6,8 +6,8 @@
 
 As we don't have yet an use case to iterate over all the existent resource policies the main endpoint is not implemented and a 405 error code is returned according to our [general error response codes](README.md#Error codes).
 
-## Single Resource Policy
-**/api/authz/resourcepolicies/<:id>**
+## Retrieve Single Resource Policy
+**GET /api/authz/resourcepolicies/<:id>**
 
 Provide detailed information about a specific resource policy. The JSON response document is as follow
 ```json
@@ -17,7 +17,9 @@ Provide detailed information about a specific resource policy. The JSON response
   "description": null,
   "policyType": "TYPE_SUBMISSION",
   "action": "READ",
-  "type": "resourcePolicy"
+  "type": "resourcePolicy",
+  "start-date": null,
+  "end-date": null
 }
 ```
 
@@ -30,14 +32,14 @@ Exposed links:
 ### EPerson
 **/api/authz/resourcepolicies/<:id>/eperson**
 
-t.b.d
+Should be an object of https://github.com/DSpace/DSpace/blob/master/dspace-spring-rest/src/main/java/org/dspace/app/rest/repository/EPersonRestRepository.java
 
 ### Group
 **/api/authz/resourcepolicies/<:id>/group**
 
-t.b.d
+Should be an object of https://github.com/DSpace/DSpace/blob/master/dspace-spring-rest/src/main/java/org/dspace/app/rest/repository/GroupRestRepository.java
 
 ### Resource
 **/api/authz/resourcepolicies/<:id>/resource**
 
-t.b.d
+Should be the DSO
