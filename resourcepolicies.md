@@ -9,6 +9,7 @@ As we don't have yet an use case to iterate over all the existent resource polic
 ## Retrieve Single Resource Policy
 **GET /api/authz/resourcepolicies/<:id>**
 
+Only admins should be able to use this function
 Provide detailed information about a specific resource policy. The JSON response document is as follow
 ```json
 {
@@ -27,6 +28,15 @@ Exposed links:
 * eperson: link to the eperson that have permission grant by the policy
 * group: link to the group that have permission grant by the policy
 * resource: link to the resource subject to the policy
+
+## Delete Single Resource Policy
+**DELETE /api/authz/resourcepolicies/<:id>**
+
+Only admins should be able to use this function
+Delete a specific resource policy. The JSON response document is as follow
+
+Use a status 200 if the resource policy existed and has been deleted
+Use a status 400 if the resource policy didn't exist
 
 ## Linked entities
 ### EPerson
