@@ -35,8 +35,9 @@ Exposed links:
 Only admins should be able to use this function
 Delete a specific resource policy. The JSON response document is as follow
 
-Use a status 200 if the resource policy existed and has been deleted
-Use a status 400 if the resource policy didn't exist
+The return status should be:
+* 204 No content - if the operation succeeded
+* 404 Not found - if the resource policy doesn't exist (or was already deleted)
 
 ## Linked entities
 ### EPerson
