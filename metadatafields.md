@@ -28,7 +28,6 @@ The JSON should be similar to:
 Provide detailed information about a specific metadata schema. The JSON response document is as follow
 ```json
 {
-  {
   "id": 8,
   "element": "contributor",
   "qualifier": "advisor",
