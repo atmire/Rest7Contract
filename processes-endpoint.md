@@ -17,7 +17,7 @@ This endpoint will return a list of all created processes. The JSON response doc
       	"number": 0
   },
   "sort" : {
-    "by" : "name",
+    "by" : "script",
     "order" : "asc"
   },
   "_embedded" : {
@@ -33,7 +33,8 @@ This endpoint will return a list of all created processes. The JSON response doc
             "value" : "954e5cfa-6990-4c85-ae42-f30d8c7888e2"
           },
           {
-            "name" : "n"
+            "name" : "n",
+            "value" : "true"
           }
         ],
         "_links" : {
@@ -45,6 +46,9 @@ This endpoint will return a list of all created processes. The JSON response doc
           },
           "output" : {
             "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/output"
+          },
+          "files" : {
+            "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/files"
           }
         }
       },
@@ -68,6 +72,9 @@ This endpoint will return a list of all created processes. The JSON response doc
           },
           "output" : {
             "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/output"
+          },
+          "files" : {
+            "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/files"
           }
         }
       }
@@ -81,6 +88,10 @@ Optional parameters to query the processes:
 * `userId`: The UUID of the person who created the process (only admins can retrieve processes they didn't start)
 * `status`: The status of the script
 * `parameter.xyz`: Which parameters have been used, and their value
+
+Sort options should support:
+* `script`
+* `startTime`
 
 ## Execution Details
 **GET /api/system/processes/<:process-id>**
@@ -99,7 +110,8 @@ This endpoint will return details on the requested process.
     "value" : "954e5cfa-6990-4c85-ae42-f30d8c7888e2"
     },
     {
-    "name" : "n"
+    "name" : "n",
+    "value" : "true"
     }
   ],
   "_links" : {
@@ -111,6 +123,9 @@ This endpoint will return details on the requested process.
     },
     "output" : {
       "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/output"
+    },
+    "files" : {
+      "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/files"
     }
   }
 }
@@ -147,6 +162,23 @@ The endpoint supports the following optional parameters:
 
 This endpoint will let an administrator download an output file created by a process. If the file is found, it will be presented as a download. This endpoint will support "Range" HTTP headers so that downloads can be paused and resumed.
 
+```json
+{
+  "processId" : "000003f1-a850-49de-af03-997272d834c9",
+  "_links" : {
+    "self" : {
+      "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/files"
+    },
+    "mapfile" : {
+      "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/files/mapfile"
+    },
+    "zipfile" : {
+      "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/files/zipfile"
+    }
+  }
+}
+```
+
 ## Execution File Output
 **GET /api/system/processes/<:process-id>/files/<:file-name>**
 
@@ -179,7 +211,8 @@ The POST request body can contain the optional parameter `startTime`. When this 
     "value" : "954e5cfa-6990-4c85-ae42-f30d8c7888e2"
     },
     {
-    "name" : "n"
+    "name" : "n",
+    "value" : "true"
     }
   ],
   "_links" : {
