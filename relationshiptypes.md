@@ -66,3 +66,5 @@ A sample can be found at https://dspace7-entities.atmire.com/rest/#https://dspac
   }
 }
 ```
+
+The 2 [item types](itemtypes.md) are embedded
