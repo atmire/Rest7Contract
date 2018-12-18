@@ -99,3 +99,18 @@ The 2 items are included as HAL links but are not embedded
 A sample can be found at https://dspace7-entities.atmire.com/rest/#https://dspace7-entities.atmire.com/rest/api/core/items/5a3f7c7a-d3df-419c-b8a2-f00ede62c60a/relationships
 
 It embeds all relationships where either the left or the right item matches the given uuid
+
+## Relationships per Relationship type
+**/api/core/relationships/<:relationshipname>**
+
+A sample can be found at https://dspace7-entities.atmire.com/rest/#https://dspace7-entities.atmire.com/rest/api/core/relationships/isPersonOfOrgUnit
+
+This is similar to
+https://dspace7-entities.atmire.com/rest/#https://dspace7-entities.atmire.com/rest/api/discover/facets/author
+
+It embeds all relationships where the relationship type has the given name on either the left or the right label
+
+
+This can be filtered to a single DSO using https://dspace7-entities.atmire.com/rest/#https://dspace7-entities.atmire.com/rest/api/core/relationships/isPersonOfOrgUnit?dso=f2235aa6-6fe7-4174-a690-598b72dd8e44 which contains all relationships created using the relationship type isPersonOfOrgUnit for which one item is f2235aa6-6fe7-4174-a690-598b72dd8e44
+
+This is similar to https://dspace7-entities.atmire.com/rest/#https://dspace7-entities.atmire.com/rest/api/discover/facets/author?query=test
