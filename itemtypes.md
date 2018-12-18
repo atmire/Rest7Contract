@@ -3,7 +3,7 @@
 
 This endpoint is currently still named entitytypes, but may be renamed still.
 
-It containt the various types of items (publication, person, journal, …)
+It contains the various types of items (publication, person, journal, …)
 
 ## Main Endpoint
 **/api/core/entitytypes**
@@ -30,3 +30,11 @@ A sample can be found at https://dspace7-entities.atmire.com/rest/#https://dspac
   }
 }
 ```
+
+It contains a HAL link to the Relationship Types for the current Item Type (not embedded)
+
+## Relationship Types for the current Item Type
+**/api/core/entitytypes/<:id>/relationshiptypes**
+
+A sample can be found at https://dspace7-entities.atmire.com/rest/#https://dspace7-entities.atmire.com/rest/api/core/entitytypes/1/relationshiptypes
+It embeds the [relationshiptypes](relationshiptypes.md)
