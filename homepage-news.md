@@ -13,7 +13,7 @@ Example:
   "_embedded": {
     "pages": [
       {
-        "uuid": "004a297e-fd06-4662-ae51-73e4b7c165c8",
+        "id": "004a297e-fd06-4662-ae51-73e4b7c165c8",
         "name": "home-page-news",
         "title": "DSpace Demo Repository",
         "sizeBytes": 234,
@@ -25,9 +25,6 @@ Example:
           },
           "format": {
             "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/004a297e-fd06-4662-ae51-73e4b7c165c8/format"
-          },
-          "languages": {
-            "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/004a297e-fd06-4662-ae51-73e4b7c165c8/languages"
           },
           "self": {
             "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/004a297e-fd06-4662-ae51-73e4b7c165c8"
@@ -63,7 +60,7 @@ Example:
 Provide detailed information about a static page. The JSON response document is as follow
 ```json
 {
-  "uuid": "004a297e-fd06-4662-ae51-73e4b7c165c8",
+  "id": "004a297e-fd06-4662-ae51-73e4b7c165c8",
   "name": "home-page-news",
   "title": "DSpace Demo Repository",
   "sizeBytes": 234,
@@ -75,7 +72,6 @@ Provide detailed information about a static page. The JSON response document is 
 Exposed links:
 * format: link to the format resource associated with the file (XHTML, jpeg, etc.). TODO: verify how images can be supported
 * content: link to access the actual content of the page
-* languages: link to language alternatives of this page
 
 ### Edit page: Multipart POST Method
 **POST /api/config/pages**
@@ -120,41 +116,53 @@ The supported **Request Headers** are:
 * If-None-Match: 
 
 ### Languages
-**/api/config/pages/<:page-name>/languages**
+**/api/config/pages/search/languages?name=<:page-name>**
 
 Example:
 ```json
 {
   "_embedded": {
-    "languages": [
+    "pages": [
       {
-        "lang": "en",
+        "id": "004a297e-fd06-4662-ae51-73e4b7c165c8",
+        "name": "home-page-news",
+        "title": "DSpace Demo Repository",
+        "sizeBytes": 234,
+        "language": "en",
+        "type": "page",
         "_links": {
+          "content": {
+            "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/004a297e-fd06-4662-ae51-73e4b7c165c8/content"
+          },
+          "format": {
+            "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/004a297e-fd06-4662-ae51-73e4b7c165c8/format"
+          },
           "self": {
             "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/004a297e-fd06-4662-ae51-73e4b7c165c8"
           }
-        }
-      },
-      {
-        "lang": "es",
-        "_links": {
-          "self": {
-            "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/e942550b-0362-4b11-920b-44a6e80a69f9"
-          }
-        }
-      },
-      {
-        "lang": "fr",
-        "_links": {
-          "self": {
-            "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/6fdd5b9f-ffc7-4896-8d01-5ff33aba589f"
+        },
+        "_embedded": {
+          "format": {
+            "id": 22,
+            "shortDescription": "XHTML",
+            "description": "XHTML",
+            "mimetype": "text/html; charset=utf-8",
+            "supportLevel": 0,
+            "internal": false,
+            "extensions": null,
+            "type": "bitstreamformat",
+            "_links": {
+              "self": {
+                "href": "https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreamformats/22"
+              }
+            }
           }
         }
       }
     ],
     "_links": {
       "self": {
-        "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/004a297e-fd06-4662-ae51-73e4b7c165c8/languages"
+        "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/pages/search/languages"
       }
     }
   }
