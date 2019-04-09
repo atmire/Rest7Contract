@@ -158,6 +158,28 @@ Example:
             }
           }
         }
+      },
+      {
+        "id": "1054a711-b307-4052-af28-4162d36d2eca",
+        "name": "home-page-news",
+        "title": "DSpace Démo Dépôt",
+        "language": "fr",
+        "sizeBytes": 0,
+        "type": "page",
+        "_links": {
+          "content": {
+            "href": "https://dspace7-internal.atmire.com/rest/api/config/pages/1054a711-b307-4052-af28-4162d36d2eca/content"
+          },
+          "format": {
+            "href": "https://dspace7-internal.atmire.com/rest/api/config/pages/1054a711-b307-4052-af28-4162d36d2eca/format"
+          },
+          "self": {
+            "href": "https://dspace7-internal.atmire.com/rest/api/config/pages/1054a711-b307-4052-af28-4162d36d2eca"
+          }
+        },
+        "_embedded": {
+          "format": null
+        }
       }
     ],
     "_links": {
