@@ -369,3 +369,4 @@ It returns all the pages linked to the DSpace Object
 Parameters:
 * The uuid parameter is mandatory
 * The name parameter is optional
+* The language parameter is optional
