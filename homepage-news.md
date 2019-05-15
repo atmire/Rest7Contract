@@ -123,12 +123,13 @@ A multipart POST request will result in creating a new file identified by the na
 
 Send detailed information about a static page, and the actual file. The sizeBytes and uuid is not required, but the other attributes are applicable
 
+The related dspaceobject is specified using a parameter because multipart uri-lists are not used
+
 ```bash
-curl --trace-ascii - -X POST "https://dspace7-internal.atmire.com/rest/api/config/pages" \
+curl --trace-ascii - -X POST "https://dspace7-internal.atmire.com/rest/api/config/pages?dspaceobject=f3e266c6-f416-4352-b856-38a1726d573a" \
 -H "Authorization: $authorization" \
 -F "file=@Downloads/test.html" \
 -F 'properties={ "name": "home-page-news", "title": "DSpace Demo Repository", "language": "en" };type=application/json' \
--F "uri-list=https://dspace7-internal.atmire.com/rest/api/core/sites/f3e266c6-f416-4352-b856-38a1726d573a;type=text/uri-list" \
 -H 'Content-Type: multipart/form-data'
 ```
 
