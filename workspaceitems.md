@@ -123,4 +123,29 @@ It returns the workspaceitem created by the specified submitter
 
 ## Multipart POST Method
 Multipart POST request will typically result in the creation of a new file in the section identified by the name of the variable used for the upload (uploads is the default name of the user uploaded content). The process will be managed by the implementation bind with the identified section.
-If succeed a 201 code will be returned and the new state of the workspaceitem serialized in the body.   
+If succeed a 201 code will be returned and the new state of the workspaceitem serialized in the body.
+
+## Call to request the suggestions
+**/api/submission/workspaceitems/<:id>/suggestions**
+
+See [Metadata Suggestions](metadata-suggestions.md) for details about this functionality and the response format
+
+Provide detailed information about the data used for the suggestions. The JSON request document is as follow for a Pubmed live search
+```json
+{
+  "suggestionType": "pubmed",
+  "pubmedData": {
+    "query": "Digitoxin metabolism by rat liver microsomes."
+  }
+}
+```
+
+This can also be used to request suggestions from the BTE framework, which uses an uploaded bitstream. The JSON request document is as follow for a BTE suggestion
+```json
+{
+  "suggestionType": "bte",
+  "bteData": {
+    "bitstream": "8d33bdfb-e7ba-43e6-a93a-f445b7e8a1e2"
+  }
+}
+```   

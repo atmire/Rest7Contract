@@ -140,3 +140,28 @@ Reset a workflow sending back the item to the workspace regardless to the step r
 204 No content - if the operation succeed
 403 Unauthorized - if you are not loggedin as an administrator
 404 Not found - if the workflow doesn't longer exist
+
+## Call to request the suggestions
+**/api/submission/workspaceitems/<:id>/suggestions**
+
+See [Metadata Suggestions](metadata-suggestions.md) for details about this functionality and the response format
+
+Provide detailed information about the data used for the suggestions. The JSON request document is as follow for a Pubmed live search
+```json
+{
+  "suggestionType": "pubmed",
+  "pubmedData": {
+    "query": "Digitoxin metabolism by rat liver microsomes."
+  }
+}
+```
+
+This can also be used to request suggestions from the BTE framework, which uses an uploaded bitstream. The JSON request document is as follow for a BTE suggestion
+```json
+{
+  "suggestionType": "bte",
+  "bteData": {
+    "bitstream": "8d33bdfb-e7ba-43e6-a93a-f445b7e8a1e2"
+  }
+}
+```
