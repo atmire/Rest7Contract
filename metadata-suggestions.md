@@ -9,6 +9,11 @@
 
 ## Introduction
 
+TODO: list of live import sources
+perform a query or reference a bitstream. Different query syntax depending on the sources. Query syntax could be shared for some sources
+search results: should display all metadata from the suggestions, not just the change to the metadata. Preferably similar to the discovery results to reuse that component
+actual suggestions: can we reuse the details from the search results?
+ 
 The live import can suggest metadata from various sources.
 The user should be given the choice to apply or ignore the metadata changes.
 
