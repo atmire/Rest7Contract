@@ -94,6 +94,15 @@ Retrieve all the versions for the provided version history identifier.
 
 Provide version information for the version id.
 
+# GET /api/versioning/version/<:versionId>
+
+The retrieval of a version of an item contains the version information, along this it will also contain one of the following:
+* Embedded workspace item
+* Embedded workflow item
+* Archived / withdrawn item
+
+Which one of these states is returned will depend on the state of the item this version is related to.
+
 ```
 {
   "id": "101",
@@ -125,7 +134,26 @@ Provide version information for the version id.
     "item": {
       "id": "b0ae9093-d771-4b12-80de-f356f3b0d067",
       "uuid": "b0ae9093-d771-4b12-80de-f356f3b0d067",
-      "name": "Test item"
+      "name": "Test item",
+      "handle": "10673/20",
+      ...
+    },
+    {
+      "id": 12,
+      "errors": [
+        ...
+      ],
+      "lastModified": "2019-07-25T11:27:51.396+0000",
+      "sections": {
+        ....
+      },
+      "type": "workspaceitem"
+    },
+    {
+      "id": 1911,
+      "lastModified": "2017-06-24T00:40:54.970+0000",
+      "step": "editstep",
+      "type": "workflowitem"
     }
   }
 }
@@ -144,6 +172,11 @@ The JSON response is the same as the endpoint above.
 **DELETE /api/versioning/version/<:versionId>**
 
 Delete a version
+* If there are multiple versions (V1, V2, V3)
+    * If we are deleting V3, version V2 will become the latest version 
+    * If have 3 versions & we delete V2, the versions will then be: V1, V3
+    * One can also delete V1, in that case V2 will become the first version
+* If there is a single version and this one is deleted the versionHistory will also be removed  
 
 * 204 No content - if the operation succeed
 * 403 Unauthorized - if you are not logged in as an administrator
