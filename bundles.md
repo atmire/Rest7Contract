@@ -9,7 +9,7 @@ The main endpoint is not used
 ## Single Bundle
 **/api/core/bundles/<:uuid>**
 
-Provide detailed information about a specific bundle. The JSON response document is as follow
+Provide detailed information about a specific bundle. A sample JSON response document is included below
 ```json
 {
   "uuid": "d3599177-0408-403b-9f8d-d300edd79edb",
@@ -151,3 +151,71 @@ Status codes:
 * 403 Unauthorized - if you are not logged in with sufficient permissions
 * 404 Not found - if the bundle doesn't exist
 * 422 Unprocessable Entity - if the list of bitstreams in the bundle is not identical to the list prior to the operation
+
+**PATCH /api/core/bundles/<:uuid>**
+
+Bitstreams may be re-ordered with the PATCH `move` operation.
+
+Current list of bitstreams:
+```json
+{
+  "orderedbitstreams" : [ 
+      {
+        "id" : "1ce6db0e-662f-4a13-ba87-c371ad664b14",
+        "uuid" : "1ce6db0e-662f-4a13-ba87-c371ad664b14",
+        "_links" : {
+          "self" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/1ce6db0e-662f-4a13-ba87-c371ad664b14"
+          }
+        }
+      }, {
+        "id" : "4dd9621f-a464-4192-bc17-d70f68845bdc",
+        "uuid" : "4dd9621f-a464-4192-bc17-d70f68845bdc",
+        "_links" : {
+          "self" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/4dd9621f-a464-4192-bc17-d70f68845bdc"
+          }
+        }
+      }
+  ]
+}
+```
+
+Example request, moving the last bitstream to the first position:
+
+```json
+[
+  {
+    "op": "move",
+    "from": "/_links/orderedbitstreams/1/href",
+    "path": "/_links/orderedbitstreams/0/href"
+  }
+]
+```
+
+New list of bitstreams:
+
+```json
+{
+  "orderedbitstreams" : [ 
+      {
+        "id" : "4dd9621f-a464-4192-bc17-d70f68845bdc",
+        "uuid" : "4dd9621f-a464-4192-bc17-d70f68845bdc",
+        "_links" : {
+          "self" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/4dd9621f-a464-4192-bc17-d70f68845bdc"
+          }
+        }
+      },
+      {
+        "id" : "1ce6db0e-662f-4a13-ba87-c371ad664b14",
+        "uuid" : "1ce6db0e-662f-4a13-ba87-c371ad664b14",
+        "_links" : {
+          "self" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/1ce6db0e-662f-4a13-ba87-c371ad664b14"
+          }
+        }
+      }
+  ]
+}
+```
