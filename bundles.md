@@ -1,0 +1,153 @@
+# Bundles Endpoints
+[Back to the list of all defined endpoints](endpoints.md)
+
+## Main Endpoint
+**/api/core/bundles**   
+
+The main endpoint is not used
+
+## Single Bundle
+**/api/core/bundles/<:uuid>**
+
+Provide detailed information about a specific bundle. The JSON response document is as follow
+```json
+{
+  "uuid": "d3599177-0408-403b-9f8d-d300edd79edb",
+  "name": "ORIGINAL",
+  "handle": null,
+  "metadata": {},
+  "type": "bundle",
+  "_links" : {
+    "primarybitstream" : {
+      "href" : "https://dspace7-entities.atmire.com/rest/api/core/bitstreams/ac49f361-4ffd-47a4-8eb2-e6c73c3f3e76"
+    },
+    "orderedbitstreams" : {
+      "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundle/d3599177-0408-403b-9f8d-d300edd79edb/bitstreams"
+    },
+    "self" : {
+      "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundle/d3599177-0408-403b-9f8d-d300edd79edb"
+    }
+  },
+   "_embedded" : {
+      "orderedbitstreams" : [ {
+        "id" : "1ce6db0e-662f-4a13-ba87-c371ad664b14",
+        "uuid" : "1ce6db0e-662f-4a13-ba87-c371ad664b14",
+        "name" : "atmire-logo.jpeg",
+        "handle" : null,
+        "metadata" : {
+          "dc.description" : [ {
+            "value" : "",
+            "language" : null,
+            "authority" : null,
+            "confidence" : -1,
+            "place" : 0
+          } ],
+          "dc.source" : [ {
+            "value" : "atmire-logo.jpeg",
+            "language" : null,
+            "authority" : null,
+            "confidence" : -1,
+            "place" : 0
+          } ],
+          "dc.title" : [ {
+            "value" : "atmire-logo.jpeg",
+            "language" : null,
+            "authority" : null,
+            "confidence" : -1,
+            "place" : 0
+          } ]
+        },
+        "bundleName" : "ORIGINAL",
+        "sizeBytes" : 7568,
+        "checkSum" : {
+          "checkSumAlgorithm" : "MD5",
+          "value" : "59a4cfd819ce67ba7252efc52d1eb99b"
+        },
+        "sequenceId" : null,
+        "type" : "bitstream",
+        "_links" : {
+          "content" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/1ce6db0e-662f-4a13-ba87-c371ad664b14/content"
+          },
+          "format" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/1ce6db0e-662f-4a13-ba87-c371ad664b14/format"
+          },
+          "self" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/1ce6db0e-662f-4a13-ba87-c371ad664b14"
+          }
+        }
+      }, {
+        "id" : "4dd9621f-a464-4192-bc17-d70f68845bdc",
+        "uuid" : "4dd9621f-a464-4192-bc17-d70f68845bdc",
+        "name" : "atmire-logo.jpeg.jpg",
+        "handle" : null,
+        "metadata" : {
+          "dc.description" : [ {
+            "value" : "Generated Thumbnail",
+            "language" : null,
+            "authority" : null,
+            "confidence" : -1,
+            "place" : 0
+          } ],
+          "dc.source" : [ {
+            "value" : "Written by FormatFilter org.dspace.app.mediafilter.JPEGFilter on 2018-05-30T14:28:19Z (GMT).",
+            "language" : null,
+            "authority" : null,
+            "confidence" : -1,
+            "place" : 0
+          } ],
+          "dc.title" : [ {
+            "value" : "atmire-logo.jpeg.jpg",
+            "language" : null,
+            "authority" : null,
+            "confidence" : -1,
+            "place" : 0
+          } ]
+        },
+        "bundleName" : "THUMBNAIL",
+        "sizeBytes" : 4825,
+        "checkSum" : {
+          "checkSumAlgorithm" : "MD5",
+          "value" : "78647c1fab73a7aa7c97fdfc538ee6d4"
+        },
+        "sequenceId" : null,
+        "type" : "bitstream",
+        "_links" : {
+          "content" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/4dd9621f-a464-4192-bc17-d70f68845bdc/content"
+          },
+          "format" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/4dd9621f-a464-4192-bc17-d70f68845bdc/format"
+          },
+          "self" : {
+            "href" : "http://10.211.55.20:8080/server/api/core/bitstreams/4dd9621f-a464-4192-bc17-d70f68845bdc"
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+Exposed links:
+* primarybitstream: link to the primary bitstream if present, it will be embedded
+* orderedbitstreams: link to the list of bitstreams displayed according to the order specified by the bundle, it will be embedded
+
+## Ordering bitstreams
+
+**PUT /api/core/bundles/<:uuid>**
+
+Bitstreams may be re-ordered with the PUT operation containing a uri-list.
+This can not be used to add/remove bitstreams, but only to change the order
+
+A sample CURL command would be:
+```
+curl -i -X POST 'https://dspace7-entities.atmire.com/rest/api/core/bundle/d3599177-0408-403b-9f8d-d300edd79edb' -H 'Authorization: Bearer eyJhbGciO…' -H "Content-Type:text/uri-list" --data 'https://dspace7-entities.atmire.com/rest/api/core/bitstreams/ac49f361-4ffd-47a4-8eb2-e6c73c3f3e76 \n https://dspace7-entities.atmire.com/rest/api/core/bitstreams/8d33bdfb-e7ba-43e6-a93a-f445b7e8a1e2'
+```
+
+Status codes:
+* 200 OK - if the operation succeed
+* 401 Forbidden - if you are not authenticated
+* 403 Unauthorized - if you are not logged in with sufficient permissions
+* 404 Not found - if the bundle doesn't exist
+* 422 Unprocessable Entity - if the list of bitstreams in the bundle is not identical to the list prior to the operation

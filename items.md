@@ -227,13 +227,69 @@ the discoverable operation will result in:
   "type": "item"
 ```
 ## Linked entities
+
+### Bundles
+
+**GET /api/core/items/<:uuid>/bundles**
+
+Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/items/1911e8a4-6939-490c-b58b-a5d70f8d91fb/bundles>
+
+It returns the bundles within this item. See the [bundle endpoint](bundles.md) for more info
+
+```json
+{
+  "bundles" : [
+  {
+    "uuid": "d3599177-0408-403b-9f8d-d300edd79edb",
+    "name": "ORIGINAL",
+    "handle": null,
+    "metadata": {},
+    "type": "bundle",
+    "_links" : {
+      "primarybitstream" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bitstreams/ac49f361-4ffd-47a4-8eb2-e6c73c3f3e76"
+      },
+      "orderedbitstreams" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundle/d3599177-0408-403b-9f8d-d300edd79edb/bitstreams"
+      },
+      "self" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundle/d3599177-0408-403b-9f8d-d300edd79edb"
+      }
+    }
+  },
+  {
+    "uuid": "d3599177-0408-403b-9f8d-d300edd79edb",
+    "name": "THUMBNAIL",
+    "handle": null,
+    "metadata": {},
+    "type": "bundle",
+    "_links" : {
+      "primarybitstream" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bitstreams/ac49f361-4ffd-47a4-8eb2-e6c73c3f3e76"
+      },
+      "orderedbitstreams" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundle/d3599177-0408-403b-9f8d-d300edd79edb/bitstreams"
+      },
+      "self" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundle/d3599177-0408-403b-9f8d-d300edd79edb"
+      }
+    }
+  }
+  ]
+}
+```
+
+This endpoint is relevant to:
+* Retrieve only the bitstreams from a given bundle from an item (e.g. only the thumbnails)
+* Retrieve or update the order of the bitstreams in a bundle
+
 ### Bitstreams
 
 **GET /api/core/items/<:uuid>/bitstreams**
 
 Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/items/1911e8a4-6939-490c-b58b-a5d70f8d91fb/bitstreams>
 
-It returns the bitstreams within this item. See the bitstream endpoint for more info](bitstreams.md#Single Bitstream)
+It returns the bitstreams within this item. See the [bitstream endpoint](bitstreams.md#Single Bitstream) for more info
 
 The supported parameters are:
 * page, size [see pagination](README.md#Pagination)
