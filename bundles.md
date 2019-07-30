@@ -135,23 +135,6 @@ Exposed links:
 
 ## Ordering bitstreams
 
-**PUT /api/core/bundles/<:uuid>**
-
-Bitstreams may be re-ordered with the PUT operation containing a uri-list.
-This can not be used to add/remove bitstreams, but only to change the order
-
-A sample CURL command would be:
-```
-curl -i -X POST 'https://dspace7-entities.atmire.com/rest/api/core/bundle/d3599177-0408-403b-9f8d-d300edd79edb' -H 'Authorization: Bearer eyJhbGciO…' -H "Content-Type:text/uri-list" --data 'https://dspace7-entities.atmire.com/rest/api/core/bitstreams/ac49f361-4ffd-47a4-8eb2-e6c73c3f3e76 \n https://dspace7-entities.atmire.com/rest/api/core/bitstreams/8d33bdfb-e7ba-43e6-a93a-f445b7e8a1e2'
-```
-
-Status codes:
-* 200 OK - if the operation succeed
-* 401 Forbidden - if you are not authenticated
-* 403 Unauthorized - if you are not logged in with sufficient permissions
-* 404 Not found - if the bundle doesn't exist
-* 422 Unprocessable Entity - if the list of bitstreams in the bundle is not identical to the list prior to the operation
-
 **PATCH /api/core/bundles/<:uuid>**
 
 Bitstreams may be re-ordered with the PATCH `move` operation.
