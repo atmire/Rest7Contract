@@ -6,7 +6,7 @@ DSpace has functionality to import and export items in CSV and ZIP format, to st
 ## Scripts Endpoint
 **GET /api/system/scripts**
 
-This endpoint will list all (REST supported) scripts defined in `dspace/config/spring/scripts.xml`. The script entries are embedded with a name, description and a self link. By "REST supported" we mean all scripts that have been updated to allow invocations from the REST API.
+This endpoint will list all (REST supported) scripts defined in `dspace/config/spring/rest/scripts.xml`. The script entries are embedded with a name, description and a self link. By "REST supported" we mean all scripts that have been updated to allow invocations from the REST API.
 
 The JSON response document is as follows
 ```json
