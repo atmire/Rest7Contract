@@ -61,85 +61,101 @@ The JSON response document is as follows
     {
       "name" : "-a",
       "description" : "add items to DSpace",
-      "type" : "boolean"
+      "type" : "boolean",
+      "mandatory": false
     },
     {
       "name" : "-b",
       "description" : "add items to DSpace via Biblio-Transformation-Engine (BTE)",
-      "type" : "boolean"
+      "type" : "boolean",
+      "mandatory": false
     },
     {
       "name" : "-c",
       "description" : "destination collection(s) database ID",
-      "type" : "id"
+      "type" : "id",
+      "mandatory": true
+,
     },
     {
       "name" : "-d",
       "description" : "delete items listed in mapfile",
-      "type" : "file"
+      "type" : "file",
+      "mandatory": false
     },
     {
       "name" : "-e",
       "description" : "email of eperson doing importing",
-      "type" : "string"
+      "type" : "string",
+      "mandatory": true
     },
     {
       "name" : "-i",
       "description" : "input type in case of BTE import",
-      "type" : "string"
+      "type" : "string",
+      "mandatory": false
     },
     {
       "name" : "-n",
       "description" : "if sending submissions through the workflow, send notification emails",
-      "type" : "boolean"
+      "type" : "boolean",
+      "mandatory": false
     },
     {
       "name" : "-p",
       "description" : "apply template",
-      "type" : "string"
+      "type" : "string",
+      "mandatory": false
     },
     {
       "name" : "-q",
       "description" : "don't display metadata",
-      "type" : "boolean"
+      "type" : "boolean",
+      "mandatory": false
     },
     {
       "name" : "-m",
       "description" : "mapfile items in mapfile",
-      "type" : "file"
+      "type" : "file",
+      "mandatory": true
     },
     {
       "name" : "-r",
       "description" : "replace items in mapfile",
-      "type" : "boolean"
+      "type" : "boolean",
+      "mandatory": false
     },
     {
       "name" : "-R",
       "description" : "resume a failed import (add only)",
-      "type" : "boolean"
+      "type" : "boolean",
+      "mandatory": false
     },
     {
       "name" : "-t",
       "description" : "test run - do not actually import items",
-      "type" : "boolean"
+      "type" : "boolean",
+      "mandatory": false
     },
     {
       "name" : "-w",
       "description" : "send submission through collection's workflow",
-      "type" : "boolean"
+      "type" : "boolean",
+      "mandatory": false
     },
     {
       "name" : "-z",
-      "description" : "zip file containig the import",
-      "type" : "file"
+      "description" : "zip file containing the import",
+      "type" : "file",
+      "mandatory": true
     }
    ]
 }
 ```
 
 Following parameter types are available:
-* `string`: A regular string value
-* `date`: A string that has a valid date pattern
-* `boolean`: true or false
-* `file`: For parameters with this type, the user has to provide a file. This would be a multipart POST request using the same filename
-* `output`: Parameters with this type define the name of the output file. This name can be used later to download the the output file (e.g. when running `export` or `metadata-export`).
+* `String`: A regular string value
+* `Date`: A string that has a valid date pattern
+* `Boolean`: true or false
+* `InputStream`: For parameters with this type, the user has to provide a file. This would be a multipart POST request using the same filename
+* `OutputStream`: Parameters with this type define the name of the output file. This name can be used later to download the the output file (e.g. when running `export` or `metadata-export`).

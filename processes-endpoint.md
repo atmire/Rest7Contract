@@ -22,8 +22,9 @@ This endpoint will return a list of all created processes. The JSON response doc
         "processId" : "1",
         "userId" : "aa0263e2-b90a-4528-89fa-116ea4859de1",
         "startTime" : "2017-11-22T10:29:11Z",
-        "endTime" : null,
-        "status" : "RUNNING",
+        "endTime" : null,    
+        "scriptName": "metadata-import",
+        "processStatus" : "RUNNING",
         "parameters" : [
           {
             "name" : "-c",
@@ -36,16 +37,16 @@ This endpoint will return a list of all created processes. The JSON response doc
         ],
         "_links" : {
           "self" : {
-            "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9"
+            "href" : "/api/system/processes/1"
           },
           "script" : {
             "href" : "/api/system/scripts/import"
           },
           "output" : {
-            "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/output"
+            "href" : "/api/system/processes/1/output"
           },
           "files" : {
-            "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/files"
+            "href" : "/api/system/processes/1/files"
           }
         }
       },
@@ -54,25 +55,26 @@ This endpoint will return a list of all created processes. The JSON response doc
         "userId" : "c7d85e7f-63e5-4bc0-96cb-5d80be48d62e",
         "startTime" : "2017-11-20T10:29:11Z",
         "endTime" : "2017-11-20T10:30:11Z",
-        "status" : "FAILED",
+        "scriptName": "metadata-import",
+        "processStatus" : "FAILED",
         "parameters" : [
           {
-            "name" : "i",
+            "name" : "-i",
             "value" : "c70893a6-ac55-48c7-9447-61e026b62929"
           }
         ],
         "_links" : {
           "self" : {
-            "href" : "/api/system/processes/1"
+            "href" : "/api/system/processes/2"
           },
           "script" : {
             "href" : "/api/system/scripts/metadata-export"
           },
           "output" : {
-            "href" : "/api/system/processes/1/output"
+            "href" : "/api/system/processes/2/output"
           },
           "files" : {
-            "href" : "/api/system/processes/1/files"
+            "href" : "/api/system/processes/2/files"
           }
         }
       }
@@ -97,8 +99,9 @@ This endpoint will return details on the requested process.
   "processId" : "3",
   "userId" : "aa0263e2-b90a-4528-89fa-116ea4859de1",
   "startTime" : "2017-11-22T10:29:11Z",
-  "endTime" : null,
-  "status" : "RUNNING",
+  "endTime" : null,              
+  "scriptName": "metadata-import",
+  "processStatus" : "RUNNING",
   "parameters" : [
     {
     "name" : "-c",
@@ -111,16 +114,16 @@ This endpoint will return details on the requested process.
   ],
   "_links" : {
     "self" : {
-      "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9"
+      "href" : "/api/system/processes/3"
     },
     "script" : {
       "href" : "/api/system/scripts/import"
     },
     "output" : {
-      "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/output"
+      "href" : "/api/system/processes/3/output"
     },
     "files" : {
-      "href" : "/api/system/processes/000003f1-a850-49de-af03-997272d834c9/files"
+      "href" : "/api/system/processes/3/files"
     }
   }
 }
@@ -302,7 +305,7 @@ Delayed scripts using a  `startTime` can be supported in a future version.
 {
   "processId" : "5",
   "userId" : "aa0263e2-b90a-4528-89fa-116ea4859de1",
-  "status" : "RUNNING",
+  "processStatus" : "RUNNING",
   "parameters" : [
     {
     "name" : "-c",
