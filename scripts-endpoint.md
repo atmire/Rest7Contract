@@ -23,6 +23,98 @@ The JSON response document is as follows
         "id" : "import",
         "name" : "import",
         "type" : "script",
+        "parameters" : [
+            {
+              "name" : "-a",  
+              "nameLong": "--add",
+              "description" : "add items to DSpace",
+              "type" : "boolean"
+            },
+            {
+              "name" : "-b",         
+              "nameLong": "--add-bte",
+              "description" : "add items to DSpace via Biblio-Transformation-Engine (BTE)",
+              "type" : "boolean"
+            },
+            {
+              "name" : "-c",  
+              "nameLong": "--collection",
+              "description" : "destination collection(s) database ID",
+              "type" : "id"
+            },
+            {
+              "name" : "-d",      
+              "nameLong": "--delete",
+              "description" : "delete items listed in mapfile",
+              "type" : "file"
+            },
+            {
+              "name" : "-e",       
+              "nameLong": "--eperson",
+              "description" : "email of eperson doing importing",
+              "type" : "string"
+            },
+            {
+              "name" : "-i",      
+              "nameLong": "--inputtype",
+              "description" : "input type in case of BTE import",
+              "type" : "string"
+            },
+            {
+              "name" : "-n",     
+              "nameLong": "--notify",
+              "description" : "if sending submissions through the workflow, send notification emails",
+              "type" : "boolean"
+            },
+            {
+              "name" : "-p",        
+              "nameLong": "--template",
+              "description" : "apply template",
+              "type" : "string"
+            },
+            {
+              "name" : "-q",         
+              "nameLong": "--quiet",
+              "description" : "don't display metadata",
+              "type" : "boolean"
+            },
+            {
+              "name" : "-m",     
+              "nameLong": "--mapfile",
+              "description" : "mapfile items in mapfile",
+              "type" : "file"
+            },
+            {
+              "name" : "-r",    
+              "nameLong": "--replace",
+              "description" : "replace items in mapfile",
+              "type" : "boolean"
+            },
+            {
+              "name" : "-R",     
+              "nameLong": "--resume",
+              "description" : "resume a failed import (add only)",
+              "type" : "boolean"
+            },
+            {
+              "name" : "-t",   
+              "nameLong": "--test",
+              "description" : "test run - do not actually import items",
+              "type" : "boolean"
+            },
+            {
+              "name" : "-w",            
+              "nameLong": "--workflow",
+              "description" : "send submission through collection's workflow",
+              "type" : "boolean"
+            },
+            {
+              "name" : "-z",      
+              "nameLong": "--zip",
+              "description" : "zip file containing the import",
+              "type" : "file"
+            }
+           ],
         "description" : "Import items into DSpace",
         "_links" : {
           "self" : {
@@ -32,7 +124,58 @@ The JSON response document is as follows
       },
       {
         "name" : "metadata-import",
-        "type" : "script",
+        "type" : "script",   
+        "parameters": [
+            {
+              "name": "-f",
+              "nameLong": "--file",
+              "description": "source file",
+              "type": "InputStream",
+              "mandatory": true
+            },
+            {
+              "name": "-e",
+              "nameLong": "--email",
+              "description": "email address or user id of user (required if adding new items)",
+              "type": "String",
+              "mandatory": true
+            },
+            {
+              "name": "-s",
+              "nameLong": "--silent",
+              "description": "silent operation - doesn't request confirmation of changes USE WITH CAUTION",
+              "type": "boolean",
+              "mandatory": false
+            },
+            {
+              "name": "-w",
+              "nameLong": "--workflow",
+              "description": "workflow - when adding new items, use collection workflow",
+              "type": "boolean",
+              "mandatory": false
+            },
+            {
+              "name": "-n",
+              "nameLong": "--notify",
+              "description": "notify - when adding new items using a workflow, send notification emails",
+              "type": "boolean",
+              "mandatory": false
+            },
+            {
+              "name": "-t",
+              "nameLong": "--template",
+              "description": "template - when adding new items, use the collection template (if it exists)",
+              "type": "boolean",
+              "mandatory": false
+            },
+            {
+              "name": "-h",
+              "nameLong": "--help",
+              "description": "help",
+              "type": "boolean",
+              "mandatory": false
+            }
+          ],
         "description" : "Import metadata after batch editing",
         "_links" : {
           "self" : {
@@ -61,77 +204,92 @@ The JSON response document is as follows
    "type" : "script",
    "parameters" : [
     {
-      "name" : "-a",
+      "name" : "-a",  
+      "nameLong": "--add",
       "description" : "add items to DSpace",
       "type" : "boolean"
     },
     {
-      "name" : "-b",
+      "name" : "-b",         
+      "nameLong": "--add-bte",
       "description" : "add items to DSpace via Biblio-Transformation-Engine (BTE)",
       "type" : "boolean"
     },
     {
-      "name" : "-c",
+      "name" : "-c",  
+      "nameLong": "--collection",
       "description" : "destination collection(s) database ID",
       "type" : "id"
     },
     {
-      "name" : "-d",
+      "name" : "-d",      
+      "nameLong": "--delete",
       "description" : "delete items listed in mapfile",
       "type" : "file"
     },
     {
-      "name" : "-e",
+      "name" : "-e",       
+      "nameLong": "--eperson",
       "description" : "email of eperson doing importing",
       "type" : "string"
     },
     {
-      "name" : "-i",
+      "name" : "-i",      
+      "nameLong": "--inputtype",
       "description" : "input type in case of BTE import",
       "type" : "string"
     },
     {
-      "name" : "-n",
+      "name" : "-n",     
+      "nameLong": "--notify",
       "description" : "if sending submissions through the workflow, send notification emails",
       "type" : "boolean"
     },
     {
-      "name" : "-p",
+      "name" : "-p",        
+      "nameLong": "--template",
       "description" : "apply template",
       "type" : "string"
     },
     {
-      "name" : "-q",
+      "name" : "-q",         
+      "nameLong": "--quiet",
       "description" : "don't display metadata",
       "type" : "boolean"
     },
     {
-      "name" : "-m",
+      "name" : "-m",     
+      "nameLong": "--mapfile",
       "description" : "mapfile items in mapfile",
       "type" : "file"
     },
     {
-      "name" : "-r",
+      "name" : "-r",    
+      "nameLong": "--replace",
       "description" : "replace items in mapfile",
       "type" : "boolean"
     },
     {
-      "name" : "-R",
+      "name" : "-R",     
+      "nameLong": "--resume",
       "description" : "resume a failed import (add only)",
       "type" : "boolean"
     },
     {
-      "name" : "-t",
+      "name" : "-t",   
+      "nameLong": "--test",
       "description" : "test run - do not actually import items",
       "type" : "boolean"
     },
     {
-      "name" : "-w",
+      "name" : "-w",            
+      "nameLong": "--workflow",
       "description" : "send submission through collection's workflow",
       "type" : "boolean"
     },
     {
-      "name" : "-z",
+      "name" : "-z",      
+      "nameLong": "--zip",
       "description" : "zip file containing the import",
       "type" : "file"
     }
