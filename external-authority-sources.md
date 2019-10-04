@@ -265,7 +265,7 @@ sample for an external source /api/integration/externalsources/orcid/entryValues
   },
   "_links": {
     "self": {
-      "href": "http://localhost:8089/rest/api/integration/externalsources/orcidV2/entryValues/0000-0002-4271-0436"
+      "href": "http://localhost:8089/rest/api/integration/externalsources/orcid/entryValues/0000-0002-4271-0436"
     }
   }
 }
