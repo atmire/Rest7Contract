@@ -126,7 +126,7 @@ Multipart POST request will typically result in the creation of a new file in th
 If succeed a 201 code will be returned and the new state of the workspaceitem serialized in the body.
 
 ## Call to request the suggestions
-**/api/submission/workspaceitems/<:id>/suggestions**
+**/api/submission/workspaceitems/<:id>/metadata-suggestions**
 
 See [Metadata Suggestions](metadata-suggestions.md) for details about this functionality and the response format
 

@@ -9,10 +9,10 @@
 
 ## Introduction
 
-TODO: list of live import sources
-perform a query or reference a bitstream. Different query syntax depending on the sources. Query syntax could be shared for some sources
-search results: should display all metadata from the suggestions, not just the change to the metadata. Preferably similar to the discovery results to reuse that component
-actual suggestions: can we reuse the details from the search results?
+TODO:
+* search results: should display all metadata from the suggestions, not just the change to the metadata. Preferably similar to the discovery results to reuse that component
+* actual suggestions: can we reuse the details from the search results?
+* start a new submission based on a external source record
  
 The live import can suggest metadata from various sources.
 The user should be given the choice to apply or ignore the metadata changes.
@@ -34,6 +34,383 @@ The examples in each section below build on each other, assuming an initial meta
 
 The user interface can display the suggested metadata, and request the user to accept or reject the changes.
 If accepted, the user interface can perform a PATCH based on the suggested metadata changes to apply the suggestions.
+
+## Main Endpoint
+**/api/submission/workspaceitems/<:id>/metadata-suggestions**
+**/api/submission/workflowitems/<:id>/metadata-suggestions**
+**/api/integration/metadata-suggestions**
+
+Provide access to the configured external sources which can suggest metadata. It returns the list of existent external sources.
+
+Example:
+```json
+{
+  "_embedded": {
+    "metadata-suggestions": [
+      {
+        "id": "pubmed",
+        "name": "pubmed",
+        "type": "metadataSuggestion",
+        "query-based": "true",
+        "file-based": "false",
+        "metadata-based": "true",
+        "_links": {
+          "entries": {
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed/entries"
+          },
+          "self": {
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed"
+          }
+        }
+      },
+      {
+        "id": "orcid",
+        "name": "orcid",
+        "type": "metadataSuggestion",
+        "query-based": "true",
+        "file-based": "false",
+        "metadata-based": "true",
+        "_links": {
+          "entries": {
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entries"
+          },
+          "self": {
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid"
+          }
+        }
+      },
+      {
+        "id": "ciencia",
+        "name": "ciencia",
+        "type": "metadataSuggestion",
+        "query-based": "true",
+        "file-based": "false",
+        "metadata-based": "true",
+        "_links": {
+          "entries": {
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ciencia/entries"
+          },
+          "self": {
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ciencia"
+          }
+        }
+      },
+      {
+        "id": "ris_data_loader",
+        "name": "ris_data_loader",
+        "type": "metadataSuggestion",
+        "query-based": "false",
+        "file-based": "true",
+        "metadata-based": "false",
+        "_links": {
+          "entries": {
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ris_data_loader/entries"
+          },
+          "self": {
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ris_data_loader"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions"
+    }
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 3,
+    "totalPages": 1,
+    "number": 0
+  }
+}
+```
+
+## Single suggestion endpoint
+**/api/integration/metadata-suggestions/<:suggestion-name>**
+
+Provide detailed information about a specific external source. The JSON response document is as follow
+```json
+{
+    "id": "pubmed",
+    "name": "pubmed",
+    "type": "metadataSuggestion",
+    "query-based": "true",
+    "file-based": "false",
+    "metadata-based": "true",
+    "_links": {
+      "entries": {
+        "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed/entries"
+      },
+      "self": {
+        "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed"
+      }
+    }
+}
+```
+
+Properties:
+* query-based: if the external source uses a query to suggest information to import
+* file-based: if the external source uses a file to suggest information to import
+* metadata-based: if the external source uses the current item metadata to suggest information to import
+
+Exposed links:
+* entries: the list of values managed by the external source
+
+## Linked entities
+### external source entries
+**/api/submission/workspaceitems/<:id>/metadata-suggestions/<:suggestion-name>/entries**
+**/api/submission/workflowitems/<:id>/metadata-suggestions/<:suggestion-name>/entries**
+
+It returns the filtered entries managed by the external source, see below 
+
+The supported parameters are:
+* page, size [see pagination](README.md#Pagination) if supported by the external source
+* query: the terms, keywords or prefix to search. Applicable for sources where "query-based" is true
+* bitstream: the bitstream ID to process. Applicable for sources where "file-based" is true
+* use-metadata: enable metadata based search (true or false, defaults to false). Applicable for sources where "metadata-based" is true
+
+It returns the entries in the external source matching the query or bitstream
+
+sample for an external source /api/submission/workspaceitems/512/metadata-suggestions/orcid/entries?query=Smith&size=2 
+```json
+{
+  "_embedded": {
+    "metadataSuggestionEntries": [
+      {
+        "id": "0000-0002-4271-0436",
+        "display": "Smith, Dean",
+        "value": "Smith, Dean",
+        "metadata": {
+            "dc.identifier.orcid": [
+              {
+                "value": "0000-0002-4271-0436",
+                "language": null,
+                "authority": null,
+                "confidence": -1,
+                "place": -1
+              }
+            ],
+            "dc.identifier.uri": [
+              {
+                "value": "https://orcid.org/0000-0002-4271-0436",
+                "language": null,
+                "authority": null,
+                "confidence": -1,
+                "place": -1
+              }
+            ],
+            "person.familyName": [
+              {
+                "value": "Smith",
+                "language": null,
+                "authority": null,
+                "confidence": -1,
+                "place": -1
+              }
+            ],
+            "person.givenName": [
+              {
+                "value": "Dean",
+                "language": null,
+                "authority": null,
+                "confidence": -1,
+                "place": -1
+              }
+            ]
+        },
+        "type": "metadataSuggestionEntry",
+        "_links": {
+          "self": {
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436"
+          }
+        }
+      },
+      {
+        "id": "0000-0003-3681-2038",
+        "display": "Smith, Charles",
+        "value": "Smith, Charles",
+        "metadata": {
+            "dc.identifier.orcid": [
+              {
+                "value": "0000-0003-3681-2038",
+                "language": null,
+                "authority": null,
+                "confidence": -1,
+                "place": -1
+              }
+            ],
+            "dc.identifier.uri": [
+              {
+                "value": "https://orcid.org/0000-0003-3681-2038",
+                "language": null,
+                "authority": null,
+                "confidence": -1,
+                "place": -1
+              }
+            ],
+            "person.familyName": [
+              {
+                "value": "Smith",
+                "language": null,
+                "authority": null,
+                "confidence": -1,
+                "place": -1
+              }
+            ],
+            "person.givenName": [
+              {
+                "value": "Charles",
+                "language": null,
+                "authority": null,
+                "confidence": -1,
+                "place": -1
+              }
+            ]
+        },
+        "type": "metadataSuggestionEntry",
+        "_links": {
+          "self": {
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0003-3681-2038"
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+### single entry (not used?)
+**GET /api/integration/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**
+
+It returns the data from one entry in an external source
+
+sample for an external source /api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436 
+```json
+{
+  "id": "0000-0002-4271-0436",
+  "display": "Smith, Dean",
+  "value": "Smith, Dean",
+  "type": "metadataSuggestionEntry",
+  "metadataSuggestion": "orcid",
+  "metadata": {
+    "dc.identifier.orcid": [
+      {
+        "value": "0000-0002-4271-0436",
+        "language": null,
+        "authority": null,
+        "confidence": 0,
+        "place": -1
+      }
+    ],
+    "dc.identifier.uri": [
+      {
+        "value": "https://orcid.org/0000-0002-4271-0436",
+        "language": null,
+        "authority": null,
+        "confidence": 0,
+        "place": -1
+      }
+    ],
+    "person.familyName": [
+      {
+        "value": "Smith",
+        "language": null,
+        "authority": null,
+        "confidence": 0,
+        "place": -1
+      }
+    ],
+    "person.givenName": [
+      {
+        "value": "Dean",
+        "language": null,
+        "authority": null,
+        "confidence": 0,
+        "place": -1
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436"
+    }
+  }
+}
+```
+
+### single entry with expected changes
+**/api/submission/workspaceitems/<:id>/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**
+**/api/submission/workflowitems/<:id>/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**
+
+It returns the data from one entry in an external source
+
+sample for an external source /api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436 
+```json
+{
+  "id": "0000-0002-4271-0436",
+  "display": "Smith, Dean",
+  "value": "Smith, Dean",
+  "type": "metadataSuggestionEntry",
+  "metadataSuggestion": "orcid",
+  "metadata": {
+    "dc.identifier.orcid": [
+      {
+        "value": "0000-0002-4271-0436",
+        "language": null,
+        "authority": null,
+        "confidence": 0,
+        "place": -1
+      }
+    ],
+    "dc.identifier.uri": [
+      {
+        "value": "https://orcid.org/0000-0002-4271-0436",
+        "language": null,
+        "authority": null,
+        "confidence": 0,
+        "place": -1
+      }
+    ],
+    "person.familyName": [
+      {
+        "value": "Smith",
+        "language": null,
+        "authority": null,
+        "confidence": 0,
+        "place": -1
+      }
+    ],
+    "person.givenName": [
+      {
+        "value": "Dean",
+        "language": null,
+        "authority": null,
+        "confidence": 0,
+        "place": -1
+      }
+    ]
+  },
+  "changes": [
+      {
+        "op": "add",
+        "path": "/metadata/dc.identifier.orcid",
+        "value": [ { "value": "0000-0002-4271-0436" } ]
+      },
+      {
+        "op": "add",
+        "path": "/metadata/dc.identifier.uri/-",
+        "value": [ { "value": "https://orcid.org/0000-0002-4271-0436" } ]
+      }
+  ],
+  "_links": {
+    "self": {
+      "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436"
+    }
+  }
+}
+```
 
 ## Adding metadata
 

@@ -142,7 +142,7 @@ Reset a workflow sending back the item to the workspace regardless to the step r
 404 Not found - if the workflow doesn't longer exist
 
 ## Call to request the suggestions
-**/api/submission/workspaceitems/<:id>/suggestions**
+**/api/submission/workflowitems/<:id>/metadata-suggestions**
 
 See [Metadata Suggestions](metadata-suggestions.md) for details about this functionality and the response format
 
