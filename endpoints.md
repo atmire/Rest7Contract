@@ -8,6 +8,7 @@
 * [/api/core/items](items.md)
 * [/api/core/bitstreams](bitstreams.md)
 * [/api/core/bitstreamformats](bitstreamformats.md)
+* [/api/core/bundles](bundles.md)
 * /api/core/sites
 * [/api/core/metadatafields](metadatafields.md)
 * [/api/core/metadataschemas](metadataschemas.md)
@@ -17,6 +18,7 @@
 * [/api/authn/login](https://wiki.duraspace.org/display/DSPACE/REST+Authentication)
 * [/api/authn/logout](https://wiki.duraspace.org/display/DSPACE/REST+Authentication)
 * [/api/authn/status](https://wiki.duraspace.org/display/DSPACE/REST+Authentication)
+* [/api/config/harvestermetadata](harvestermetadata.md)
 * [/api/config/submissiondefinitions](submissiondefinitions.md)
 * [/api/config/submissionsections](submissionsections.md)
 * [/api/config/submissionforms](submissionforms.md)
@@ -31,6 +33,7 @@
 
 ## Endpoints Under Development/Discussion
 * /api/authz/resourcepolicies
+* [/api/statistics](statistics.md)
 * [/api/tools/itemrequests](item-requests.md)
 
 ## Other Endpoints (raw list)

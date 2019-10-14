@@ -138,6 +138,52 @@ Provide detailed information about a specific input-form. The JSON response docu
           "languageCodes": []
         }
       ]
+    },
+    {
+      "fields": [
+        {
+          "input": { },
+          "label": "Journal",
+          "mandatory": false,
+          "repeatable": false,
+          "hints": "Select the journal related to this volume.",
+          "selectableRelationship": {
+            "relationship": "isVolumeOfJournal",
+            "filter": "creativework.publisher:somepublishername",
+            "search-configuration": "periodicalConfiguration",
+            "nameVariants": false
+          }
+        }
+      ]
+    },
+    {
+      "fields": [
+        {
+          "input": {
+            "type": "name"
+          },
+          "label": "Author",
+          "mandatory": true,
+          "repeatable": true,
+          "mandatoryMessage": "At least one author (plain text or relationship) is required",
+          "hints": "Add an author",
+          "selectableRelationship": {
+            "relationship": "isAuthorOfPublication",
+            "filter": null,
+            "search-configuration": "personConfiguration",
+            "nameVariants": true
+          },
+          "selectableMetadata": [
+            {
+              "metadata": "dc.contributor.author",
+              "label": null,
+              "authority": null,
+              "closed": false
+            }
+          ],
+          "languageCodes": []
+        }
+      ]
     }
   ],
   "type": "submissionform"
@@ -154,3 +200,6 @@ The visibility attributes can assume one of the following values
 * *null* : editable
 * *readonly*: visible but not alterable
 * *hidden*: not visible
+
+The *nameVariants* attribute can only be used in combination with entities.
+It defines whether an alternative name can be used for the stored relation with the entity (in the relationship).

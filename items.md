@@ -227,15 +227,86 @@ the discoverable operation will result in:
   "type": "item"
 ```
 ## Linked entities
-### Bitstreams
-**/api/core/items/<:uuid>/bitstreams**
 
-Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/items/1911e8a4-6939-490c-b58b-a5d70f8d91fb/bitstreams>
+### Bundles
 
-It returns the bitstreams within this item. See the bitstream endpoint for more info](bitstreams.md#Single Bitstream)
+**GET /api/core/items/<:uuid>/bundles**
 
-The supported parameters are:
-* page, size [see pagination](README.md#Pagination)
+Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/items/1911e8a4-6939-490c-b58b-a5d70f8d91fb/bundles>
+
+It returns the bundles within this item. See the [bundle endpoint](bundles.md) for more info
+
+```json
+{
+  "bundles" : [
+  {
+    "uuid": "d3599177-0408-403b-9f8d-d300edd79edb",
+    "name": "ORIGINAL",
+    "handle": null,
+    "metadata": {},
+    "type": "bundle",
+    "_links" : {
+      "primarybitstream" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bitstreams/ac49f361-4ffd-47a4-8eb2-e6c73c3f3e76"
+      },
+      "bitstreams" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundles/d3599177-0408-403b-9f8d-d300edd79edb/bitstreams"
+      },
+      "self" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundles/d3599177-0408-403b-9f8d-d300edd79edb"
+      }
+    }
+  },
+  {
+    "uuid": "d3599177-0408-403b-9f8d-d300edd79edb",
+    "name": "THUMBNAIL",
+    "handle": null,
+    "metadata": {},
+    "type": "bundle",
+    "_links" : {
+      "primarybitstream" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bitstreams/ac49f361-4ffd-47a4-8eb2-e6c73c3f3e76"
+      },
+      "bitstreams" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundles/d3599177-0408-403b-9f8d-d300edd79edb/bitstreams"
+      },
+      "self" : {
+        "href" : "https://dspace7-entities.atmire.com/rest/api/core/bundles/d3599177-0408-403b-9f8d-d300edd79edb"
+      }
+    }
+  }
+  ]
+}
+```
+
+This endpoint is relevant to:
+* Retrieve only the bitstreams from a given bundle from an item (e.g. only the thumbnails)
+* Retrieve or update the order of the bitstreams in a bundle
+
+**POST /api/core/items/<:uuid>/bundles**
+
+Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/items/1911e8a4-6939-490c-b58b-a5d70f8d91fb/bundles>
+
+Creating a new bundle in an item would use JSON similar to the example below:
+
+```json
+{
+  "name": "ORIGINAL",
+  "metadata": {}
+}
+```
+
+It returns the created bundle.
+
+If a bundle with the given doesn't exist yet in the item, it will be created
+
+Status codes:
+* 201 Created - if the operation succeed
+* 400 Bad Request - if the bundle name already exists in the item
+* 401 Forbidden - if you are not authenticated
+* 403 Unauthorized - if you are not logged in with sufficient permissions
+* 404 Not found - if the item doesn't exist
+* 412 Precondition Failed - if there is a discrepancy between the declared size or checksum and the computed one
 
 ### Owning Collection
 **/api/core/items/<:uuid>/owningCollection**
@@ -258,7 +329,6 @@ Status codes:
 * 401 Forbidden - if you are not authenticated
 * 403 Unauthorized - if you are not logged in with sufficient permissions
 * 404 Not found - if the item doesn't exist
-* 422 Unprocessable Entity - if the collection doesn't exist or the data cannot be resolved to a collection
 
 ### Mapped Collections
 **GET /api/core/items/<:uuid>/mappedCollections**
@@ -342,6 +412,13 @@ It embeds all relationships where either the left or the right item matches the 
 
 Delete an item.
 
+An optional parameter for copying virtual metadata to actual metadata in the related items can be included (only authorized by admins): `copyVirtualMetadata`. This can contain values:
+* all (all relationships are verified, and the virtual metadata in all related items is migrated to actual metadata)
+* relationship type ID: only relationship types with the given ID(s) are migrated. The `copyVirtualMetadata` can be included multiple times to support multiple IDs
+* configured: the behavior will be retrieved from a configuration parameter
+* _not specified_: no virtual metadata is expanded to actual metadata
+
+Return codes:
 * 204 No content - if the operation succeed
 * 401 Forbidden - if you are not authenticated
 * 403 Unauthorized - if you are not logged in with sufficient permissions

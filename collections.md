@@ -96,11 +96,93 @@ Collection metadata can be modified as described in [Modifying metadata via Patc
 
 ## Linked entities
 ### Logo
-**/api/core/collections/<:uuid>/logo**
+#### Retrieve Logo
+**GET /api/core/collections/<:uuid>/logo**
 
 Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/logo>
 
-[It returns the bitstream representing the logo of this collection. See the bitstream endpoint for more info](bitstreams.md#Single Bitstream)
+It returns the bitstream representing the logo of this collection. [See the bitstream endpoint for more info](bitstreams.md#Single Bitstream)
+
+#### Create Logo
+**POST /api/core/collections/<:uuid>/logo**
+
+To be used on a collection without a logo
+
+Curl example:
+```
+curl 'https://dspace7.4science.cloud/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/logo' \
+ -XPOST -H 'Content-Type: multipart/form-data' \
+ -H 'Authorization: Bearer eyJhbGciOiJI...' \
+ -F "file=@Downloads/test.png"
+```
+
+* The collection is determined using the ID in the URL
+* The file is uploaded using multipart/form-data
+
+It returns the created bitstream. [See the bitstream endpoint for more info](bitstreams.md#Single Bitstream)
+
+The REST API can support Content-Length and Content-MD5 headers to verify integrity
+
+Status codes:
+* 201 Created - if the operation succeed
+* 401 Forbidden - if you are not authenticated
+* 403 Unauthorized - if you are not logged in with sufficient permissions
+* 404 Not found - if the collection doesn't exist
+* 412 Precondition Failed - if there is a discrepancy between the declared size or checksum and the computed one
+* 422 Unprocessable Entity - if there was no file, or if the collection already contains a logo
+
+This endpoint only accepts one file at a time. If multiple files are uploaded, any extra files will be ignored.
+
+#### Replace Logo
+**PUT /api/core/collections/<:uuid>/logo**
+
+To be used on a collection with a logo
+
+Curl example:
+```
+curl 'https://dspace7.4science.cloud/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/logo' \
+ -XPUT -H 'Content-Type: multipart/form-data' \
+ -H 'Authorization: Bearer eyJhbGciOiJI...' \
+ -F "file=@Downloads/test.png"
+```
+
+* The collection is determined using the ID in the URL
+* The file is uploaded using multipart/form-data
+
+It returns the created bitstream. [See the bitstream endpoint for more info](bitstreams.md#Single Bitstream)
+
+The REST API can support Content-Length and Content-MD5 headers to verify integrity
+
+Status codes:
+* 201 Created - if the operation succeed
+* 401 Forbidden - if you are not authenticated
+* 403 Unauthorized - if you are not logged in with sufficient permissions
+* 404 Not found - if the collection doesn't exist
+* 412 Precondition Failed - if there is a discrepancy between the declared size or checksum and the computed one
+* 422 Unprocessable Entity - if there was no file, or if the collection didn't contain a logo
+
+This endpoint only accepts one file at a time. If multiple files are uploaded, any extra files will be ignored.
+
+#### Delete Logo
+**DELETE /api/core/collections/<:uuid>/logo**
+
+To be used on a collection with a logo
+
+Curl example:
+```
+curl 'https://dspace7.4science.cloud/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/logo' \
+ -XDELETE \
+ -H 'Authorization: Bearer eyJhbGciOiJI...'
+```
+
+* The collection is determined using the ID in the URL
+
+Status codes:
+* 204 No content - if the operation succeed
+* 401 Forbidden - if you are not authenticated
+* 403 Unauthorized - if you are not logged in with sufficient permissions
+* 404 Not found - if the collection doesn't exist
+* 422: if the collection didn't contain a logo
 
 ### License
 **/api/core/collections/<:uuid>/license**
@@ -115,6 +197,80 @@ Return information about the license template in use by the collection. The json
 
 * custom (**READ-ONLY**): can be true or false. True means that a custom license has been set for the collection otherwise the site license template is used and returned in the text attribute
 * text: contains the textual value of the license template to use for submission in the collection
+
+### Item template
+#### Retrieve Item template
+**GET /api/core/collections/<:uuid>/itemtemplate**
+
+Example: <https://dspace7.4science.it/dspace-spring-rest/#https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/itemtemplate>
+
+It returns the item representing the item template of this collection. [See the item endpoint for more info](items.md#Single Item)
+
+#### Create Item template
+**POST /api/core/collections/<:uuid>/itemtemplate**
+
+To be used on a collection without a item template.
+The metadata is included in JSON
+
+```json
+{
+  "metadata": {
+    "dc.type": [
+      {
+        "value": "Journal Article",
+        "language": "en",
+        "authority": null,
+        "confidence": -1
+      }
+    ]
+  },
+  "inArchive": false,
+  "discoverable": false,
+  "withdrawn": false,
+  "type": "item"
+}
+```
+
+* The collection is determined using the ID in the URL
+* The metadata is uploaded using JSON
+* The properties inArchive, discoverable, withdrawn can be omitted or false, but not true
+
+It returns the created item. [See the item endpoint for more info](items.md#Single Item)
+
+Status codes:
+* 201 Created - if the operation succeed
+* 401 Forbidden - if you are not authenticated
+* 403 Unauthorized - if you are not logged in with sufficient permissions
+* 404 Not found - if the collection doesn't exist
+* 422 Unprocessable Entity - if inArchive, discoverable, withdrawn was set to true, or if the collection already contains a itemtemplate
+
+#### Replace Item template
+**PATCH /api/core/collections/<:uuid>/itemtemplate**
+
+Item metadata can be modified as described in [Modifying metadata via Patch](metadata-patch.md).
+
+To be used on a collection with an item template
+
+#### Delete Item template
+**DELETE /api/core/collections/<:uuid>/itemtemplate**
+
+To be used on a collection with an item template
+
+Curl example:
+```
+curl 'https://dspace7.4science.cloud/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb/itemtemplate' \
+ -XDELETE \
+ -H 'Authorization: Bearer eyJhbGciOiJI...'
+```
+
+* The collection is determined using the ID in the URL
+
+Status codes:
+* 204 No content - if the operation succeed
+* 401 Forbidden - if you are not authenticated
+* 403 Unauthorized - if you are not logged in with sufficient permissions
+* 404 Not found - if the collection doesn't exist
+* 422: if the collection didn't contain an item template
 
 ### Default Access Conditions
 **/api/core/collections/<:uuid>/defaultAccessConditions**
@@ -154,6 +310,160 @@ The json representation is as follow
 }
 ```
 see also the [ResourcePolicies endpoint](resourcepolicies.md)
+
+### Mapped items
+**/api/core/collections/<:uuid>/mappedItems**
+
+This is a Read-only endpoint to retrieve the mapped items for this collection.
+
+Item mappings can only be modified via [/items/[uuid]/mappedCollections](items.md#mapped-collections)
+
+The request will return a list of items 
+
+### Collection Harvesting Settings
+**GET /api/core/collections/<:uuid>/harvester**
+
+It returns the harvesting settings for the current collection. This information is only accessible for users with collection administration permissions
+
+The harvest_type can be any of:
+* NONE
+* METADATA_ONLY
+* METADATA_AND_REF
+* METADATA_AND_BITSTREAMS
+
+The harvest_status can be any of:
+* READY
+* BUSY
+* QUEUED
+* OAI_ERROR
+* UNKNOWN_ERROR
+
+The metadata_config_id can be one of the ids from the [Harvester Metadata Endpoint](harvestermetadata.md)
+
+A sample json response:
+
+```json
+{
+  "harvest_type": "METADATA_ONLY",
+  "oai_source": "https://dspace.mit.edu/oai/request",
+  "oai_set_id": "col_1721.1_114174",
+  "harvest_message": null,
+  "metadata_config_id": "dc",
+  "harvest_status": "READY",
+  "harvest_start_time": null,
+  "last_harvested": null,
+  "_links": {
+    "self": {
+      "href": "https://dspace7.4science.it/dspace-spring-rest/api/core/collections/6f944500-c300-449a-9023-a5ad8bd21160/harvester"
+    }
+  },
+  "_embedded": {
+    "metadata_configs": {
+      "configs": [
+        {
+           "id": "dc",
+           "label": "Simple Dublin Core",
+           "nameSpace": "http://www.openarchives.org/OAI/2.0/oai_dc/"
+        },
+        {
+           "id": "qdc",
+           "label": "Qualified Dublin Core",
+           "nameSpace": "http://purl.org/dc/terms/"
+        },
+        {
+           "id": "dim",
+           "label": "DSpace Intermediate Metadata",
+           "nameSpace": "http://www.dspace.org/xmlns/dspace/dim"
+        }
+      ],
+      "_links": {
+        "self": {
+          "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/harvestermetadata"
+        }
+      }
+    }
+    
+  }
+}
+```
+
+A sample json response if no harvesting is enabled:
+
+```json
+{
+  "harvest_type": "NONE",
+  "oai_source": null,
+  "oai_set_id": null,
+  "harvest_message": null,
+  "metadata_config_id": null,
+  "harvest_status": null,
+  "harvest_start_time": null,
+  "last_harvested": null,
+  "_links": {
+    "self": {
+      "href": "https://dspace7.4science.it/dspace-spring-rest/api/core/collections/6f944500-c300-449a-9023-a5ad8bd21160/harvester"
+    }
+  },
+  "_embedded": {
+    "harvestermetadata": {
+      "configs": [
+        {
+           "id": "dc",
+           "label": "Simple Dublin Core",
+           "nameSpace": "http://www.openarchives.org/OAI/2.0/oai_dc/"
+        },
+        {
+           "id": "qdc",
+           "label": "Qualified Dublin Core",
+           "nameSpace": "http://purl.org/dc/terms/"
+        },
+        {
+           "id": "dim",
+           "label": "DSpace Intermediate Metadata",
+           "nameSpace": "http://www.dspace.org/xmlns/dspace/dim"
+        }
+      ],
+      "_links": {
+        "self": {
+          "href": "https://dspace7.4science.it/dspace-spring-rest/api/config/harvestermetadata"
+        }
+      }
+    }
+    
+  }
+}
+```
+
+### Changing Collection Harvesting Settings
+**PUT /api/core/collections/<:uuid>/harvester**
+
+It updates the harvesting settings for the current collection. This information can only be updated by users with collection administration permissions
+
+A sample json request:
+
+```json
+{
+  "harvest_type": "METADATA_ONLY",
+  "oai_source": "https://dspace.mit.edu/oai/request",
+  "oai_set_id": "col_1721.1_114174",
+  "metadata_config_id": "dc"
+}
+```
+
+A sample json request to disable harvesting is:
+
+```json
+{
+  "harvest_type": "NONE"
+}
+```
+
+Status codes:
+* 200 OK - if the operation succeeded
+* 401 Forbidden - if you are not authenticated
+* 403 Unauthorized - if you are not logged in with sufficient permissions
+* 404 Not found - if the collection doesn't exist
+* 422 Unprocessable Entity - if the harvest_type or the metadata_config_id is not valid
 
 ## Creating a collection
 
