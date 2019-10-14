@@ -136,7 +136,12 @@ An example curl call:
  --data "https://dspace7.4science.it/dspace-spring-rest/api/core/collections/1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb \n https://dspace7.4science.it/dspace-spring-rest/api/integration/externalsources/orcid/entryValues/0000-0002-4271-0436"
 ```
 
-If an external entry value is included, the metadata from this external source should be suggested automatically
+No confirmation, user has confirmed they want this record, and the previous state of the item is empty
+
+If an external entry value is included, the metadata from this external source should be imported automatically.  
+There's no need for a preview of the expected changes similar to the [Metadata Suggestions](metadata-suggestions.md) functionality because
+* The user has already confirmed they want to import this particular record
+* This is a new submission, it starts from an empty item
 
 ## Call to request the suggestions
 **/api/submission/workspaceitems/<:id>/metadata-suggestions**

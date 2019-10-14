@@ -25,11 +25,14 @@ TODO:
 * start a new submission based on a external source record
 
 ## Main Endpoint
-**/api/submission/workspaceitems/<:id>/metadata-suggestions**
-**/api/submission/workflowitems/<:id>/metadata-suggestions**
+**/api/integration/metadata-suggestions**
 
 Provide access to the configured external sources which can suggest metadata.
 It returns the list of existent external sources.
+
+Parameters (or should this be retrieved from the submission forms?):
+* workspaceitem
+* workflowitem
 
 The list can differ per item.
 A Person item can be limited to sources containing people such as orcid.
@@ -49,10 +52,10 @@ Example:
         "metadata-based": "true",
         "_links": {
           "entries": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/pubmed/entries"
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed/entries"
           },
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/pubmed"
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed"
           }
         }
       },
@@ -65,10 +68,10 @@ Example:
         "metadata-based": "true",
         "_links": {
           "entries": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/orcid/entries"
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entries"
           },
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/orcid"
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid"
           }
         }
       },
@@ -81,10 +84,10 @@ Example:
         "metadata-based": "true",
         "_links": {
           "entries": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/ciencia/entries"
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ciencia/entries"
           },
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/ciencia"
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ciencia"
           }
         }
       },
@@ -97,10 +100,10 @@ Example:
         "metadata-based": "false",
         "_links": {
           "entries": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/ris_data_loader/entries"
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ris_data_loader/entries"
           },
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/ris_data_loader"
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ris_data_loader"
           }
         }
       }
@@ -108,7 +111,7 @@ Example:
   },
   "_links": {
     "self": {
-      "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512"
+      "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions"
     }
   },
   "page": {
@@ -121,8 +124,7 @@ Example:
 ```
 
 ## Single suggestion endpoint
-**/api/submission/workspaceitems/<:id>/metadata-suggestions/<:suggestion-name>**
-**/api/submission/workflowitems/<:id>/metadata-suggestions/<:suggestion-name>**
+**/api/integration/metadata-suggestions/<:suggestion-name>**
 
 Provide detailed information about a specific external source. The JSON response document is as follow
 ```json
@@ -135,10 +137,10 @@ Provide detailed information about a specific external source. The JSON response
     "metadata-based": "true",
     "_links": {
       "entries": {
-        "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/pubmed/entries"
+        "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed/entries"
       },
       "self": {
-        "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/pubmed"
+        "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed"
       }
     }
 }
@@ -154,7 +156,7 @@ Exposed links:
 
 ## Linked entities
 ### external source entries
-**/api/submission/workspaceitems/<:id>/metadata-suggestions/<:suggestion-name>/entries**
+**/api/integration/metadata-suggestions/<:suggestion-name>/entries**
 **/api/submission/workflowitems/<:id>/metadata-suggestions/<:suggestion-name>/entries**
 
 It returns the filtered entries managed by the external source, see below
@@ -164,10 +166,12 @@ The supported parameters are:
 * query: the terms, keywords or prefix to search. Applicable for sources where "query-based" is true
 * bitstream: the bitstream ID to process. Applicable for sources where "file-based" is true
 * use-metadata: enable metadata based search (true or false, defaults to false). Applicable for sources where "metadata-based" is true
+* workspaceitem: the current workspace item ID (mutually exclusive with workflowitem)
+* workflowitem: the current workflow item ID (mutually exclusive with workspaceitem)
 
-It returns the entries in the external source matching the query or bitstream
+It returns the entries in the external source matching the query, bitstream or item metadata
 
-sample for an external source /api/submission/workspaceitems/512/metadata-suggestions/orcid/entries?query=Smith&size=2
+sample for an external source /api/integration/metadata-suggestions/orcid/entries?query=Smith&size=2
 ```json
 {
   "_embedded": {
@@ -217,7 +221,10 @@ sample for an external source /api/submission/workspaceitems/512/metadata-sugges
         "type": "metadataSuggestionEntry",
         "_links": {
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436"
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436"
+          },
+          "changes": {
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436/changes"
           }
         }
       },
@@ -266,8 +273,11 @@ sample for an external source /api/submission/workspaceitems/512/metadata-sugges
         "type": "metadataSuggestionEntry",
         "_links": {
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0003-3681-2038"
-          }
+            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entryValues/0000-0003-3681-2038"
+          },
+         "changes": {
+           "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entryValues/0000-0003-3681-2038/changes"
+         }
         }
       }
     ]
@@ -275,13 +285,18 @@ sample for an external source /api/submission/workspaceitems/512/metadata-sugges
 }
 ```
 
-### single entry with expected changes
-**/api/submission/workspaceitems/<:id>/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**
-**/api/submission/workflowitems/<:id>/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**
+The changes are explained below, and won't be embedded in this endpoint.
+
+### single entry
+**/api/integration/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**  
+
+Parameters:
+* workspaceitem: the current workspace item ID (mutually exclusive with workflowitem)
+* workflowitem: the current workflow item ID (mutually exclusive with workspaceitem)
 
 It returns the data from one entry in an external source
 
-sample for an external source /api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436
+sample for an external source /api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436
 ```json
 {
   "id": "0000-0002-4271-0436",
@@ -327,7 +342,16 @@ sample for an external source /api/submission/workspaceitems/512/metadata-sugges
       }
     ]
   },
-  "changes": [
+  "_links": {
+    "self": {
+      "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436"
+    },
+    "changes": {
+      "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436/changes"
+    }
+  },
+  "_embedded" : {
+     "changes" : [
       {
         "op": "add",
         "path": "/metadata/dc.identifier.orcid",
@@ -338,14 +362,48 @@ sample for an external source /api/submission/workspaceitems/512/metadata-sugges
         "path": "/metadata/dc.identifier.uri/-",
         "value": [ { "value": "https://orcid.org/0000-0002-4271-0436" } ]
       }
+     ]
+  }
+}
+```
+
+The changes embedded are the suggested metadata changes to be applied to the given item
+
+### changes for a single entry
+**/api/integration/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>/changes**  
+
+Parameters:
+* workspaceitem: the current workspace item ID (mutually exclusive with workflowitem)
+* workflowitem: the current workflow item ID (mutually exclusive with workspaceitem)
+
+It returns the suggested metadata changes from one entry to be applied to the given item
+
+sample for an external source /api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436/changes
+```json
+{
+  "changes" : [
+    {
+      "op": "add",
+      "path": "/metadata/dc.identifier.orcid",
+      "value": [ { "value": "0000-0002-4271-0436" } ]
+    },
+    {
+      "op": "add",
+      "path": "/metadata/dc.identifier.uri/-",
+      "value": [ { "value": "https://orcid.org/0000-0002-4271-0436" } ]
+    }
   ],
   "_links": {
     "self": {
-      "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436"
+      "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436/changes"
     }
   }
 }
 ```
+
+The suggested changes are based on the current item:
+* It takes the current metadata of the item into account (don't suggest to add a title which is already present)
+* It takes the submission forms into account (don't suggest to change metadata fields which are not editable based on input forms, only one value for a non-repeatable field)
 
 ## Changes suggested from the external source
 ### Introduction
