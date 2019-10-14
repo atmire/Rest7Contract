@@ -3,15 +3,25 @@
 
 **Contents:**
 
-* [Introduction](#introduction)
-* [Adding metadata](#adding-metadata)
-* [Replacing metadata](#replacing-metadata)
+- [Introduction](#introduction)
+- [Main Endpoint](#main-endpoint)
+- [Single suggestion endpoint](#single-suggestion-endpoint)
+- [Linked entities](#linked-entities)
+	- [external source entries](#external-source-entries)
+	- [single entry with expected changes](#single-entry-with-expected-changes)
+- [Changes suggested from the external source](#changes-suggested-from-the-external-source)
+	- [Introduction](#introduction)
+	- [Adding metadata](#adding-metadata)
+	- [Replacing metadata](#replacing-metadata)
 
 ## Introduction
 
+This contract allows for suggesting metadata changes to an in-submission or in-workflow item.
+The user can choose an external source to use for suggesting the metadata (e.g. PubMed for a medical publication, ORCID for an author, a RIS file for uploaded metadata).
+The external source will suggest matches, and will suggest metadata changes if the match is accepted by the user.
+A full metadata description of the data from the external source is displayed in combination to the suggested changes to the current item.
+
 TODO:
-* search results: should display all metadata from the suggestions, not just the change to the metadata. Preferably similar to the discovery results to reuse that component
-* actual suggestions: can we reuse the details from the search results?
 * start a new submission based on a external source record
 
 ## Main Endpoint
@@ -147,7 +157,7 @@ Exposed links:
 **/api/submission/workspaceitems/<:id>/metadata-suggestions/<:suggestion-name>/entries**
 **/api/submission/workflowitems/<:id>/metadata-suggestions/<:suggestion-name>/entries**
 
-It returns the filtered entries managed by the external source, see below 
+It returns the filtered entries managed by the external source, see below
 
 The supported parameters are:
 * page, size [see pagination](README.md#Pagination) if supported by the external source
@@ -157,7 +167,7 @@ The supported parameters are:
 
 It returns the entries in the external source matching the query or bitstream
 
-sample for an external source /api/submission/workspaceitems/512/metadata-suggestions/orcid/entries?query=Smith&size=2 
+sample for an external source /api/submission/workspaceitems/512/metadata-suggestions/orcid/entries?query=Smith&size=2
 ```json
 {
   "_embedded": {
@@ -271,7 +281,7 @@ sample for an external source /api/submission/workspaceitems/512/metadata-sugges
 
 It returns the data from one entry in an external source
 
-sample for an external source /api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436 
+sample for an external source /api/submission/workspaceitems/512/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436
 ```json
 {
   "id": "0000-0002-4271-0436",
@@ -339,7 +349,7 @@ sample for an external source /api/submission/workspaceitems/512/metadata-sugges
 
 ## Changes suggested from the external source
 ### Introduction
- 
+
 The live import can suggest metadata changes.
 The user should be given the choice to apply or ignore these metadata changes.
 
