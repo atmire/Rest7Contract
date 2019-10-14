@@ -13,34 +13,17 @@ TODO:
 * search results: should display all metadata from the suggestions, not just the change to the metadata. Preferably similar to the discovery results to reuse that component
 * actual suggestions: can we reuse the details from the search results?
 * start a new submission based on a external source record
- 
-The live import can suggest metadata from various sources.
-The user should be given the choice to apply or ignore the metadata changes.
-
-The suggestions will be presented in a format compatible with the [Metadata Patch](metadata-patch.md)
-to allow the user-interface to easily apply the suggested changes.
-
-The examples in each section below build on each other, assuming an initial metadata state of:
-
-```json
-{
-  "metadata": {
-    "dc.title": [
-      { "value": "Initial Title", "language": null, "authority": null, "confidence": -1 }
-    ]
-  }
-}
-```
-
-The user interface can display the suggested metadata, and request the user to accept or reject the changes.
-If accepted, the user interface can perform a PATCH based on the suggested metadata changes to apply the suggestions.
 
 ## Main Endpoint
 **/api/submission/workspaceitems/<:id>/metadata-suggestions**
 **/api/submission/workflowitems/<:id>/metadata-suggestions**
-**/api/integration/metadata-suggestions**
 
-Provide access to the configured external sources which can suggest metadata. It returns the list of existent external sources.
+Provide access to the configured external sources which can suggest metadata.
+It returns the list of existent external sources.
+
+The list can differ per item.
+A Person item can be limited to sources containing people such as orcid.
+A Publication item can be limited to sources containing publications such as PubMed
 
 Example:
 ```json
@@ -56,10 +39,10 @@ Example:
         "metadata-based": "true",
         "_links": {
           "entries": {
-            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed/entries"
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/pubmed/entries"
           },
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed"
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/pubmed"
           }
         }
       },
@@ -72,10 +55,10 @@ Example:
         "metadata-based": "true",
         "_links": {
           "entries": {
-            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entries"
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/orcid/entries"
           },
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid"
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/orcid"
           }
         }
       },
@@ -88,10 +71,10 @@ Example:
         "metadata-based": "true",
         "_links": {
           "entries": {
-            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ciencia/entries"
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/ciencia/entries"
           },
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ciencia"
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/ciencia"
           }
         }
       },
@@ -104,10 +87,10 @@ Example:
         "metadata-based": "false",
         "_links": {
           "entries": {
-            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ris_data_loader/entries"
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/ris_data_loader/entries"
           },
           "self": {
-            "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/ris_data_loader"
+            "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/ris_data_loader"
           }
         }
       }
@@ -115,7 +98,7 @@ Example:
   },
   "_links": {
     "self": {
-      "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions"
+      "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512"
     }
   },
   "page": {
@@ -128,7 +111,8 @@ Example:
 ```
 
 ## Single suggestion endpoint
-**/api/integration/metadata-suggestions/<:suggestion-name>**
+**/api/submission/workspaceitems/<:id>/metadata-suggestions/<:suggestion-name>**
+**/api/submission/workflowitems/<:id>/metadata-suggestions/<:suggestion-name>**
 
 Provide detailed information about a specific external source. The JSON response document is as follow
 ```json
@@ -141,10 +125,10 @@ Provide detailed information about a specific external source. The JSON response
     "metadata-based": "true",
     "_links": {
       "entries": {
-        "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed/entries"
+        "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/pubmed/entries"
       },
       "self": {
-        "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/pubmed"
+        "href": "https://dspace7-internal.atmire.com/server/api/submission/workspaceitems/512/pubmed"
       }
     }
 }
@@ -281,65 +265,6 @@ sample for an external source /api/submission/workspaceitems/512/metadata-sugges
 }
 ```
 
-### single entry (not used?)
-**GET /api/integration/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**
-
-It returns the data from one entry in an external source
-
-sample for an external source /api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436 
-```json
-{
-  "id": "0000-0002-4271-0436",
-  "display": "Smith, Dean",
-  "value": "Smith, Dean",
-  "type": "metadataSuggestionEntry",
-  "metadataSuggestion": "orcid",
-  "metadata": {
-    "dc.identifier.orcid": [
-      {
-        "value": "0000-0002-4271-0436",
-        "language": null,
-        "authority": null,
-        "confidence": 0,
-        "place": -1
-      }
-    ],
-    "dc.identifier.uri": [
-      {
-        "value": "https://orcid.org/0000-0002-4271-0436",
-        "language": null,
-        "authority": null,
-        "confidence": 0,
-        "place": -1
-      }
-    ],
-    "person.familyName": [
-      {
-        "value": "Smith",
-        "language": null,
-        "authority": null,
-        "confidence": 0,
-        "place": -1
-      }
-    ],
-    "person.givenName": [
-      {
-        "value": "Dean",
-        "language": null,
-        "authority": null,
-        "confidence": 0,
-        "place": -1
-      }
-    ]
-  },
-  "_links": {
-    "self": {
-      "href": "https://dspace7-internal.atmire.com/server/api/integration/metadata-suggestions/orcid/entryValues/0000-0002-4271-0436"
-    }
-  }
-}
-```
-
 ### single entry with expected changes
 **/api/submission/workspaceitems/<:id>/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**
 **/api/submission/workflowitems/<:id>/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**
@@ -412,7 +337,31 @@ sample for an external source /api/submission/workspaceitems/512/metadata-sugges
 }
 ```
 
-## Adding metadata
+## Changes suggested from the external source
+### Introduction
+ 
+The live import can suggest metadata changes.
+The user should be given the choice to apply or ignore these metadata changes.
+
+The suggestions will be presented in a format compatible with the [Metadata Patch](metadata-patch.md)
+to allow the user-interface to easily apply the suggested changes.
+
+The examples in each section below build on each other, assuming an initial metadata state of:
+
+```json
+{
+  "metadata": {
+    "dc.title": [
+      { "value": "Initial Title", "language": null, "authority": null, "confidence": -1 }
+    ]
+  }
+}
+```
+
+The user interface can display the suggested metadata changes, and request the user to accept or reject the changes.
+If accepted, the user interface can perform a PATCH based on the suggested metadata changes to apply the suggestions.
+
+### Adding metadata
 
 With the `add` operation, the live import suggests to add metadata new values.
 
@@ -473,7 +422,7 @@ If this patch is applied hereafter, the new metadata state is:
 }
 ```
 
-## Replacing metadata
+### Replacing metadata
 
 With `replace`, the live import suggests to overwrite any of the following within a single operation
 of a PATCH request:
