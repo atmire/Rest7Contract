@@ -7,8 +7,9 @@
 - [Main Endpoint](#main-endpoint)
 - [Single suggestion endpoint](#single-suggestion-endpoint)
 - [Linked entities](#linked-entities)
-	- [external source entries](#external-source-entries)
-	- [single entry with expected changes](#single-entry-with-expected-changes)
+	- [External source entries](#external-source-entries)
+	- [Single entry](#single-entry)
+	- [Changes for a single entry](#changes-for-a-single-entry)
 - [Changes suggested from the external source](#changes-suggested-from-the-external-source)
 	- [Introduction](#introduction)
 	- [Adding metadata](#adding-metadata)
@@ -155,7 +156,7 @@ Exposed links:
 * entries: the list of values managed by the external source
 
 ## Linked entities
-### external source entries
+### External source entries
 **/api/integration/metadata-suggestions/<:suggestion-name>/entries**
 **/api/submission/workflowitems/<:id>/metadata-suggestions/<:suggestion-name>/entries**
 
@@ -287,7 +288,7 @@ sample for an external source /api/integration/metadata-suggestions/orcid/entrie
 
 The changes are explained below, and won't be embedded in this endpoint.
 
-### single entry
+### Single entry
 **/api/integration/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>**  
 
 Parameters:
@@ -369,7 +370,7 @@ sample for an external source /api/integration/metadata-suggestions/orcid/entryV
 
 The changes embedded are the suggested metadata changes to be applied to the given item
 
-### changes for a single entry
+### Changes for a single entry
 **/api/integration/metadata-suggestions/<:suggestion-name>/entryValues/<:entry-id>/changes**  
 
 Parameters:
