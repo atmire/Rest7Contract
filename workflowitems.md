@@ -140,8 +140,3 @@ Reset a workflow sending back the item to the workspace regardless to the step r
 204 No content - if the operation succeed
 403 Unauthorized - if you are not loggedin as an administrator
 404 Not found - if the workflow doesn't longer exist
-
-## Call to request the suggestions
-**/api/submission/workflowitems/<:id>/metadata-suggestions**
-
-See [Metadata Suggestions](metadata-suggestions.md) for details about this functionality and the response format

@@ -142,8 +142,3 @@ If an external entry value is included, the metadata from this external source s
 There's no need for a preview of the expected changes similar to the [Metadata Suggestions](metadata-suggestions.md) functionality because
 * The user has already confirmed they want to import this particular record
 * This is a new submission, it starts from an empty item
-
-## Call to request the suggestions
-**/api/submission/workspaceitems/<:id>/metadata-suggestions**
-
-See [Metadata Suggestions](metadata-suggestions.md) for details about this functionality and the response format
