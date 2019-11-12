@@ -32,7 +32,28 @@ Provide detailed information about a specific workflow step. An example JSON res
 }
 ```
 
-* the **actions** property contains the list of actions the user is authorized to perform in this step
+The **actions** property contains the list of actions the user is authorized to perform in this step:
+* The **edit_metadata** action implies the user can use the PATCH on the workflow item's submission sections to edit the metadata.
+* Other actions are considered to be buttons with an action sent to REST using a POST to the claimed task
+
+Reject:
+```sh
+curl 'https://dspace7.4science.cloud/server/api/workflow/claimedtasks/29' \
+-H 'Connection: keep-alive' \
+-H 'Accept: application/json, text/plain, */*' \
+-H 'authorization: Bearer eyJhbGci...' \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+--data 'submit_reject=true&reason=test'
+```
+Edit metadata:
+```sh
+curl 'https://dspace7.4science.cloud/server/api/workflow/workflowitems/102' \
+-XPATCH \
+-H 'Accept: application/json, text/plain, */*' \
+-H 'Content-Type: application/json; charset=utf-8' \
+-H 'Authorization: Bearer eyJhbGciOi...' \
+--data-binary '[{"op":"replace","path":"/sections/traditionalpageone/dc.title/0","value":{"value":"test item","language":null,"authority":null,"display":"test item","confidence":-1,"place":0,"otherInformation":null}}]'
+```
 
 ## Linked Entities
 ### elements
