@@ -270,7 +270,7 @@ It returns all the pages linked to the DSpace Object
 Parameters:
 * The uuid parameter is mandatory
 * The name parameter is optional
-* The format parameter is optional
+* The format parameter is optional, if provided it should containe the "mimetype" from the file
 * The language parameter is optional and overrides the preferred language. It can be either a single language or "*"
 
 The preferred language can be defined in the "Accept-Language" header
