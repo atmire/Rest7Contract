@@ -11,12 +11,12 @@ Provide access to requests. It returns the list of existing requests avoiding to
 Example: to be provided
 
 ## Single Request
-**/api/tools/itemrequests/<:token>**
+**/api/tools/itemrequests/<:id>**
 
 Provide detailed information about a specific request. The JSON response document will resemble this:
 ```json
 {
-  "id":1,
+  "id":"c19e820ea0b270f0ec98323864dcc8b8",
   "decisionDate":null,
   "expires":null,
   "requestDate":"2021-09-17T14:55:50.089+00:00",
@@ -46,7 +46,7 @@ Provide detailed information about a specific request. The JSON response documen
 Item properties:
 
   * type: always "itemrequest".  READ-ONLY
-  * id: internal unique identifier of the request.  READ-ONLY
+  * id: opaque string which uniquely identifies this request.  READ-ONLY
   * itemId: UUID of the requested Item.
   * bitstreamId: UUID of the requested bitstream.
   * allfiles: true if the request is for all bitstreams of the item.
@@ -58,6 +58,7 @@ Item properties:
   * acceptRequest: true if the request has been granted.
   * decisionDate: date that the request was granted or denied.  READ-ONLY.
   * token: opaque string which uniquely identifies this request.  READ-ONLY
+    * Note: this field is a copy of `id`, for backwards compatibility with clients that use this field instead.
 
 Exposed links:
 
@@ -96,7 +97,7 @@ Return codes:
 * 422 UNPROCESSABLE ENTITY - if the POSTed document could not be interpreted, the Item or Bitstream could not be found, or required fields are missing
 
 ## Accepting / Denying a Request
-**PUT /api/tools/itemrequests/<:token>**
+**PUT /api/tools/itemrequests/<:id>**
 
 Anyone may accept or deny a request.  Access is controlled by keeping the token confidential.  The Content-Type is JSON.  Example:
 ```json
